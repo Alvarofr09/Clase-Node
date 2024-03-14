@@ -1,0 +1,11 @@
+{
+  "name": "03_npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "7.ls-advance.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Alvaro",
+  "license": "ISC"
+}
