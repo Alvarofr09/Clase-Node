@@ -30,17 +30,17 @@ app.get("/account/:guid", (req, res) => {
 });
 
 // Crear una nueva cuenta a partir del guid y de name
-app.post("/add-account", (req, res) => {
+app.post("/account", (req, res) => {
 	res.send("Cuenta creada");
 });
 
 // Actualizar el nombre de una cuenta
-app.patch("/update-account", (req, res) => {
+app.patch("/account", (req, res) => {
 	res.send("Cuenta actualizada");
 });
 
 // Eliminar una cuenta
-app.delete("/delete-account", (req, res) => {
+app.delete("/account", (req, res) => {
 	res.send("Cuenta eliminada");
 });
 
