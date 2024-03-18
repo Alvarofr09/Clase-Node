@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 // Cargamos variables de entorno
 dotenv.config();
 
+// Importamos bbdd
 const { USERS_BBDD } = require("./bbdd");
 
 // Definimos el puerto
@@ -16,18 +17,25 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 
-// Obtener los detalles de una cuenta
-app.get("/account", (req, res) => {
-	res.send("Detalles de la cuenta");
+// Obtener los detalles de una cuenta a partir del guid
+app.get("/account/:guid", (req, res) => {
+	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
+	const { guid } = req.params;
+	const user = USERS_BBDD.find((user) => user.guid === guid);
+	console.log(user);
+	// Si no existe el usuario respondemos con un 404 (not found)
+	if (!user) return res.status(404).send("Cuenta no encontrada");
+
+	res.send(user);
 });
 
-// Crear una nueva cuenta
+// Crear una nueva cuenta a partir del guid y de name
 app.post("/add-account", (req, res) => {
 	res.send("Cuenta creada");
 });
 
-// Actualizar los detalles de una cuenta
-app.put("/update-account", (req, res) => {
+// Actualizar el nombre de una cuenta
+app.patch("/update-account", (req, res) => {
 	res.send("Cuenta actualizada");
 });
 
