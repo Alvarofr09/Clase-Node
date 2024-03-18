@@ -1,8 +1,15 @@
 // Importamos express
 const express = require("express");
+// Importamos dotenv
+const dotenv = require("dotenv");
+
+// Cargamos variables de entorno
+dotenv.config();
+
+const { USERS_BBDD } = require("./bbdd");
 
 // Definimos el puerto
-const PORT = 3000;
+const port = process.env.PORT;
 const app = express();
 
 // middlewares para interpretar el formato JSON y text desde el cliente por http
@@ -30,6 +37,6 @@ app.delete("/delete-account", (req, res) => {
 });
 
 // Levantamos el servidor en el puerto 3000
-app.listen(PORT, () => {
-	console.log(`Server in port ${PORT}`);
+app.listen(port, () => {
+	console.log(`Server levantado en el puerto ${port}`);
 });
