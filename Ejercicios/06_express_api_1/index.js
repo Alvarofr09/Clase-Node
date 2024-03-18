@@ -34,14 +34,22 @@ app.post("/account", (req, res) => {
 });
 
 // Actualizar el nombre de una cuenta
-app.patch("/account", (req, res) => {
+app.patch("/account/:guid", (req, res) => {
 	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const { guid } = req.params;
+	// Extraemos el nombre del body
+	const { name } = req.body;
+	// Si no existe name devolvemos un 404 (not found)
+	if (!name) return res.status(404);
+
+	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const user = USERS_BBDD.find((user) => user.guid === guid);
 	// Si no existe el usuario respondemos con un 404 (not found)
 	if (!user) return res.status(404).send("Cuenta no encontrada");
 
-	res.send("Cuenta actualizada");
+	// Añadimos el nombre modificado y enviamos la respuesta
+	user.name = name;
+	res.send(user);
 });
 
 // Eliminar una cuenta
@@ -55,7 +63,7 @@ app.delete("/account/:guid", (req, res) => {
 	USERS_BBDD.splice(userIndex, 1);
 
 	// Enviamos simplemente un 200 OK
-	res.send(200);
+	res.status(200).send("Cuenta eliminada");
 });
 
 // Levantamos el servidor en el puerto 3000
