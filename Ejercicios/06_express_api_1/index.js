@@ -22,7 +22,6 @@ app.get("/account/:guid", (req, res) => {
 	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const { guid } = req.params;
 	const user = USERS_BBDD.find((user) => user.guid === guid);
-	console.log(user);
 	// Si no existe el usuario respondemos con un 404 (not found)
 	if (!user) return res.status(404).send("Cuenta no encontrada");
 
@@ -36,12 +35,27 @@ app.post("/account", (req, res) => {
 
 // Actualizar el nombre de una cuenta
 app.patch("/account", (req, res) => {
+	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
+	const { guid } = req.params;
+	const user = USERS_BBDD.find((user) => user.guid === guid);
+	// Si no existe el usuario respondemos con un 404 (not found)
+	if (!user) return res.status(404).send("Cuenta no encontrada");
+
 	res.send("Cuenta actualizada");
 });
 
 // Eliminar una cuenta
-app.delete("/account", (req, res) => {
-	res.send("Cuenta eliminada");
+app.delete("/account/:guid", (req, res) => {
+	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
+	const { guid } = req.params;
+	const userIndex = USERS_BBDD.findIndex((user) => user.guid === guid);
+	// Si no existe el usuario respondemos con un 404 (not found)
+	if (userIndex === -1) return res.status(404).send("La cuenta no existe");
+	// Eliminamos el indice de ese usuario del array
+	USERS_BBDD.splice(userIndex, 1);
+
+	// Enviamos simplemente un 200 OK
+	res.send(200);
 });
 
 // Levantamos el servidor en el puerto 3000
