@@ -30,7 +30,21 @@ app.get("/account/:guid", (req, res) => {
 
 // Crear una nueva cuenta a partir del guid y de name
 app.post("/account", (req, res) => {
-	res.send("Cuenta creada");
+	// Extremos el guid y el name del body. Obligamos que estén los dos campos para crear un usuario
+	const { guid, name, mail } = req.body;
+	// Si no existe guid o name devolvemos un 400 (bad request)
+	if (!guid || !name || !mail) return res.status(400).send("Error en el body");
+
+	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
+	const user = USERS_BBDD.find((user) => user.guid === guid);
+	// Si existe el usuario respondemos con un 409 (conflict)
+	// Ya que no se puede crear una nueva cuenta con el mismo guid
+	if (user) return res.status(409).send("Cuenta ya existente");
+
+	// Creamos un objeto nuevo con los datos recibidos y lo añadimos al array de usuarios
+	USERS_BBDD.push({ guid, name, mail });
+	// Enviamos una respuesta 201 (created)
+	res.sendStatus(201);
 });
 
 // Actualizar el nombre de una cuenta
