@@ -18,7 +18,7 @@ accountRouter.use((req, res, next) => {
 });
 
 // Obtener los detalles de una cuenta a partir del guid
-accountRouter.get("/account/:guid", (req, res) => {
+accountRouter.get("/:guid", (req, res) => {
 	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const { guid } = req.params;
 	const user = USERS_BBDD.find((user) => user.guid === guid);
@@ -29,7 +29,7 @@ accountRouter.get("/account/:guid", (req, res) => {
 });
 
 // Crear una nueva cuenta a partir del guid y de name
-accountRouter.post("/account", (req, res) => {
+accountRouter.post("/", (req, res) => {
 	// Extremos el guid y el name del body. Obligamos que estén los dos campos para crear un usuario
 	const { guid, name, mail } = req.body;
 	// Si no existe guid o name devolvemos un 400 (bad request)
@@ -48,7 +48,7 @@ accountRouter.post("/account", (req, res) => {
 });
 
 // Actualizar el nombre de una cuenta
-accountRouter.patch("/account/:guid", (req, res) => {
+accountRouter.patch("/:guid", (req, res) => {
 	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const { guid } = req.params;
 	// Extraemos el nombre del body
@@ -67,7 +67,7 @@ accountRouter.patch("/account/:guid", (req, res) => {
 });
 
 // Eliminar una cuenta
-accountRouter.delete("/account/:guid", (req, res) => {
+accountRouter.delete("/:guid", (req, res) => {
 	// Buscamos los detalles de la cuenta a traves del guid recibido por req.params
 	const { guid } = req.params;
 	const userIndex = USERS_BBDD.findIndex((user) => user.guid === guid);

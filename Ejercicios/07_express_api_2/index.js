@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 // middleware que hemos importado del router accountRouter
-app.use(accountRouter);
+app.use("/account", accountRouter);
 
 // Levantamos el servidor en el puerto 3000
 app.listen(port, () => {
