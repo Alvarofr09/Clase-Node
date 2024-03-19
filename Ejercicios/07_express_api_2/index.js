@@ -2,6 +2,8 @@
 const express = require("express");
 // Importamos dotenv
 const dotenv = require("dotenv");
+// Importamos Morgan (middleware de peticiones HTTP para node.js)
+const logger = require("morgan");
 // Importamos accountRouter
 const accountRouter = require("./routes/accountRouter");
 
@@ -15,6 +17,9 @@ const app = express();
 // middlewares para interpretar el formato JSON y text desde el cliente por http
 app.use(express.json());
 app.use(express.text());
+// middleware de peticiones HTTP para node.js (Morgan)
+app.use(logger("dev"));
+
 // middleware que hemos importado del router accountRouter
 app.use("/account", accountRouter);
 
