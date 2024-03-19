@@ -6,9 +6,6 @@ const dotenv = require("dotenv");
 // Cargamos variables de entorno
 dotenv.config();
 
-// Importamos bbdd
-const { USERS_BBDD } = require("./bbdd");
-
 // Definimos el puerto
 const port = process.env.PORT;
 const app = express();
