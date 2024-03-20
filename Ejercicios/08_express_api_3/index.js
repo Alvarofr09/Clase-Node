@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const logger = require("morgan");
 // Importamos accountRouter
 const accountRouter = require("./routes/accountRouter");
+const authRouter = require("./routes/authRouter");
 
 // Cargamos variables de entorno
 dotenv.config();
@@ -22,6 +23,8 @@ app.use(logger("dev"));
 
 // middleware que hemos importado del router accountRouter
 app.use("/account", accountRouter);
+// middleware que hemos importado del router authRouter
+app.use("/auth", authRouter);
 
 // Levantamos el servidor en el puerto 3000
 app.listen(port, () => {
