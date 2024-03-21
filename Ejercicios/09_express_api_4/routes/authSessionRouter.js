@@ -42,7 +42,6 @@ authSessionRouter.get("/profile", (req, res) => {
 	// Obtenemos las cookies
 	const { cookies } = req;
 
-	console.log(sessions);
 	// Si la cookie no existe enviamos un 401 (unauthorized)
 	if (!cookies.sessionId) return res.sendStatus(401);
 
