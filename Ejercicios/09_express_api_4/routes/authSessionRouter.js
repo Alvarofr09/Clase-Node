@@ -59,7 +59,7 @@ authSessionRouter.get("/profile", (req, res) => {
 	// Si no obtenemos el usuario enviamos un 401 (unauthorized)
 	if (!user) return res.sendStatus(401);
 
-	// Borramos la contraseñadel objeto obtenido para no mostarlo
+	// Borramos la contraseña del objeto obtenido para no mostarlo
 	delete userSession.password;
 
 	// Y devolvemos los datos del usuario
