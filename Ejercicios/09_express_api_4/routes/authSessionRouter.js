@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 
 // Importamos checkEmailPassword
 const checkEmailPassword = require("../utils/checkEmailPassword");
+const { USERS_BBDD } = require("../bbdd");
 
 const authSessionRouter = express.Router();
 
@@ -26,7 +27,7 @@ authSessionRouter.post("/login", async (req, res) => {
 		sessions.push({ sessionId, guid });
 
 		// Escribimos en la cookie el sessionId con la opcion httpOnly
-		res.cookie("SessionId", sessionId, { httpOnly: true });
+		res.cookie("sessionId", sessionId, { httpOnly: true });
 
 		// Si todo es correcto enviamos la respuesta. 200 OK
 		return res.send(`Usuario logueado`);
@@ -37,4 +38,31 @@ authSessionRouter.post("/login", async (req, res) => {
 	}
 });
 
+authSessionRouter.get("/profile", (req, res) => {
+	// Obtenemos las cookies
+	const { cookies } = req;
+
+	console.log(sessions);
+	// Si la cookie no existe enviamos un 401 (unauthorized)
+	if (!cookies.sessionId) return res.sendStatus(401);
+
+	// Buscamos la sesion recibida en el array de sesiones
+	const userSession = sessions.find(
+		(session) => session.sessionId === cookies.sessionId
+	);
+
+	// Si no existe la sesion enviamos un 401 (unauthorized)
+	if (!userSession) return res.sendStatus(401);
+
+	// Obtenemos los datos del usuario a traves del guid
+	const user = USERS_BBDD.find((user) => (user.guid = userSession.guid));
+
+	// Si no obtenemos el usuario enviamos un 401 (unauthorized)
+	if (!user) return res.sendStatus(401);
+
+	// Borramos la contraseña
+
+	// Y devolvemos los datos del usuario
+	return res.send(user);
+});
 module.exports = authSessionRouter;
