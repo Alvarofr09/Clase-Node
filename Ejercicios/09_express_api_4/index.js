@@ -4,9 +4,10 @@ const express = require("express");
 const dotenv = require("dotenv");
 // Importamos Morgan (middleware de peticiones HTTP para node.js)
 const logger = require("morgan");
-// Importamos accountRouter
+// Importamos las rutas
 const accountRouter = require("./routes/accountRouter");
 const authRouter = require("./routes/authRouter");
+const authSessionRouter = require("./routes/authSessionRouter");
 
 // Cargamos variables de entorno
 dotenv.config();
@@ -25,6 +26,8 @@ app.use(logger("dev"));
 app.use("/account", accountRouter);
 // middleware que hemos importado del router authRouter
 app.use("/auth", authRouter);
+// middleware que hemos importado del router authSessionRouter
+app.use("/auth-session", authSessionRouter);
 
 // Levantamos el servidor en el puerto 3000
 app.listen(port, () => {
