@@ -65,4 +65,5 @@ authSessionRouter.get("/profile", (req, res) => {
 	// Y devolvemos los datos del usuario
 	return res.send(user);
 });
+
 module.exports = authSessionRouter;
