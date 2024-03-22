@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const accountRouter = require("./routes/accountRouter");
 const authRouter = require("./routes/authRouter");
 const authSessionRouter = require("./routes/authSessionRouter");
+const authTokenRouter = require("./routes/authTokenRouter");
 
 // Cargamos variables de entorno
 dotenv.config();
@@ -31,6 +32,8 @@ app.use("/account", accountRouter);
 app.use("/auth", authRouter);
 // middleware que hemos importado del router authSessionRouter
 app.use("/auth-session", authSessionRouter);
+// middleware que hemos importado del router authTokenRouter
+app.use("/auth-token", authTokenRouter);
 
 // Levantamos el servidor en el puerto 3000
 app.listen(port, () => {
