@@ -3,10 +3,11 @@ const { SignJWT, jwtVerify } = require("jose");
 
 const { USERS_BBDD } = require("../bbdd");
 const checkEmailPassword = require("../utils/checkEmailPassword");
+const validateLoginDto = require("../dto/validateLoginDto");
 
 const authTokenRouter = express.Router();
 
-authTokenRouter.post("/login", async (req, res) => {
+authTokenRouter.post("/login", validateLoginDto, async (req, res) => {
 	//Obtenemos el email y password del body
 	const { email, password } = req.body;
 	// Si no existe alguno de esos dos campos devolvemos un 400 (bad request)
