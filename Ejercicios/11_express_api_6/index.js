@@ -1,11 +1,9 @@
-// Importamos express
+// Importamos las librerias
 const express = require("express");
-// Importamos dotenv
 const dotenv = require("dotenv");
-// Importamos Morgan (middleware de peticiones HTTP para node.js)
 const logger = require("morgan");
-// importamos cookie-parser
 const cookieParser = require("cookie-parser");
+
 // Importamos las rutas
 const accountRouter = require("./routes/accountRouter");
 const authRouter = require("./routes/authRouter");
@@ -26,13 +24,10 @@ app.use(express.text());
 app.use(logger("dev"));
 app.use(cookieParser());
 
-// middleware que hemos importado del router accountRouter
+// -- api middleware --
 app.use("/account", accountRouter);
-// middleware que hemos importado del router authRouter
 app.use("/auth", authRouter);
-// middleware que hemos importado del router authSessionRouter
 app.use("/auth-session", authSessionRouter);
-// middleware que hemos importado del router authTokenRouter
 app.use("/auth-token", authTokenRouter);
 
 // Levantamos el servidor en el puerto 3000
