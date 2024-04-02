@@ -1,0 +1,28 @@
+{
+	"name": "07_express_api_2",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon ./index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@sinclair/typebox": "^0.32.20",
+		"ajv": "^8.12.0",
+		"ajv-errors": "^3.0.0",
+		"ajv-formats": "^3.0.1",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.4.5",
+		"express": "^4.18.3",
+		"jose": "^5.2.3",
+		"morgan": "^1.10.0",
+		"uuid": "^9.0.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.0"
+	}
+}
