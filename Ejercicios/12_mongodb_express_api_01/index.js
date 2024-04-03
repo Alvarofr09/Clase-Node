@@ -9,12 +9,13 @@ const accountRouter = require("./routes/accountRouter");
 const authRouter = require("./routes/authRouter");
 const authSessionRouter = require("./routes/authSessionRouter");
 const authTokenRouter = require("./routes/authTokenRouter");
+const mongodbConnection = require("./services/mongodb");
 
 // Cargamos variables de entorno
 dotenv.config();
 
 // Definimos el puerto
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 const app = express();
 
 // middlewares para interpretar el formato JSON y text desde el cliente por http
@@ -30,7 +31,18 @@ app.use("/auth", authRouter);
 app.use("/auth-session", authSessionRouter);
 app.use("/auth-token", authTokenRouter);
 
-// Levantamos el servidor en el puerto 3000
-app.listen(port, () => {
-	console.log(`Server levantado en el puerto ${port}`);
-});
+// Conectamos con la base de datos y el servidor
+const main = async () => {
+	try {
+		await mongodbConnection();
+		console.log("Database connected");
+		app.listen(PORT, () => {
+			console.log(`Server levantado en el puerto ${PORT}`);
+		});
+	} catch (e) {
+		console.log("Error in database connection:", e.message);
+	}
+};
+
+// Lanzamos el servidor
+main();
