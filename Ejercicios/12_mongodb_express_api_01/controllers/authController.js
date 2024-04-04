@@ -33,7 +33,8 @@ const loginAutorizado = async (req, res) => {
 		const user = await checkEmailPassword(email, password);
 
 		// Si el rol del usuario no es administrador devolvemos un 403 (forbidden)
-		if (user.role !== "Admin") return res.sendStatus(403);
+		if (user.role !== "admin")
+			return res.status(403).send("No estas autorizado");
 
 		// Si todo sale bien respondemos con un 200 (ok)
 		return res.send(`Usuario ${user.name} autenticado`);
