@@ -1,6 +1,6 @@
 const { SignJWT, jwtVerify } = require("jose");
+
 const checkEmailPassword = require("../utils/checkEmailPassword");
-const { USERS_BBDD } = require("../bbdd");
 const userModel = require("../services/schemas/userSchema");
 
 const loginToken = async (req, res) => {
@@ -59,7 +59,6 @@ const getProfileToken = async (req, res) => {
 		);
 
 		// Obtenemos los datos del usuario a traves del guid
-		// const user = USERS_BBDD.find((user) => user.guid === payload.guid);
 		const user = await userModel.findById(payload.guid);
 
 		// Si no obtenemos el usuario enviamos un 401 (unauthorized)
