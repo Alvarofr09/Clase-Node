@@ -6,6 +6,7 @@ const checkEmailPassword = require("../utils/checkEmailPassword");
 
 // Importamos bbdd
 const { USERS_BBDD } = require("../bbdd");
+const userModel = require("../services/schemas/userSchema");
 
 const sessions = [];
 
@@ -37,7 +38,7 @@ const login = async (req, res) => {
 	}
 };
 
-const getProfile = (req, res) => {
+const getProfile = async (req, res) => {
 	// Obtenemos las cookies
 	const { cookies } = req;
 
@@ -53,7 +54,8 @@ const getProfile = (req, res) => {
 	if (!userSession) return res.sendStatus(401);
 
 	// Obtenemos los datos del usuario a traves del guid
-	const user = USERS_BBDD.find((user) => (user.guid = userSession.guid));
+	// const user = USERS_BBDD.find((user) => (user.guid = userSession.guid));
+	const user = await userModel.findById(userSession.guid);
 
 	// Si no obtenemos el usuario enviamos un 401 (unauthorized)
 	if (!user) return res.sendStatus(401);
