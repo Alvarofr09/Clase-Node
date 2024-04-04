@@ -11,11 +11,11 @@ const loginToken = async (req, res) => {
 
 	try {
 		// Validamos el email y password y obtenemos el guid
-		const { guid } = await checkEmailPassword(email, password);
+		const { _id } = await checkEmailPassword(email, password);
 
 		// GENERAR TOKEN Y DEVOLVER TOKEN
 		// Construimos el JWT con el guid
-		const jwtConstructor = new SignJWT({ guid });
+		const jwtConstructor = new SignJWT({ guid: _id });
 
 		// Codificamos la clave secreta definida en la variable de entorno por requisito de la libreria jose
 		// y poder pasarla en el formato correcto (uint8Array) en el metodo .sign
@@ -60,7 +60,6 @@ const getProfileToken = async (req, res) => {
 
 		// Obtenemos los datos del usuario a traves del guid
 		// const user = USERS_BBDD.find((user) => user.guid === payload.guid);
-		console.log("Payload: " + payload);
 		const user = await userModel.findById(payload.guid);
 
 		// Si no obtenemos el usuario enviamos un 401 (unauthorized)
