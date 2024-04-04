@@ -15,9 +15,10 @@ const getUser = async (req, res) => {
 
 const addUser = async (req, res) => {
 	// Extremos el guid y el name del body. Obligamos que estén los dos campos para crear un usuario
-	const { guid, name, mail } = req.body;
+	const { guid, name, mail, password, role } = req.body;
 	// Si no existe guid o name devolvemos un 400 (bad request)
-	if (!guid || !name || !mail) return res.status(400).send("Error en el body");
+	if (!guid || !name || !mail || !password || !role)
+		return res.status(400).send("Error en el body");
 
 	// Buscamos si existe el guid
 	const user = await userModel.findById(guid);
@@ -27,7 +28,13 @@ const addUser = async (req, res) => {
 	if (user) return res.status(409).send("Cuenta ya existente");
 
 	// Instanciamos el modelo y lo guardamos
-	const newUser = new userModel({ _id: guid, name, email: mail });
+	const newUser = new userModel({
+		_id: guid,
+		name,
+		email: mail,
+		password,
+		role,
+	});
 	await newUser.save();
 
 	// Enviamos una respuesta 201 (created)
@@ -66,7 +73,7 @@ const deleteUser = async (req, res) => {
 	await user.deleteOne();
 
 	// Enviamos simplemente un 200 OK
-	res.status(200).send("Cuenta eliminada");
+	return res.status(200).send("Cuenta eliminada");
 };
 
 module.exports = {
