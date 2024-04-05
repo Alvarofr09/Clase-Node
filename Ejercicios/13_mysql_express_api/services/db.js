@@ -21,4 +21,32 @@ db.createConection = async () => {
 		throw new Error(error.message);
 	}
 };
+
+db.query = async (sqlQuery, params, type, conn) => {
+	try {
+		const [result] = await conn.query(sqlQuery, params);
+		switch (type) {
+			case "select":
+				return JSON.parse(JSON.stringify(result));
+
+			case "insert":
+				return parseInt(result.insertId);
+
+			case "update":
+			case "replace":
+			case "delete":
+				if (result.affectedRows > 0) {
+					return true;
+				} else {
+					return false;
+				}
+
+			default:
+				throw new Error("Query type not found");
+		}
+	} catch (error) {
+		console.error("Query or database error: ", error);
+		throw new Error(error.message);
+	}
+};
 module.exports = db;
