@@ -9,7 +9,7 @@ db.createConection = async () => {
 			port: process.env.DB_PORT,
 			user: process.env.DB_USER,
 			password: process.env.DB_PASSWORD,
-			db: process.env.DB_NAME,
+			database: process.env.DB_NAME,
 			// dateStrings:
 			// se indica a la libreria que debe devolver los valores de tipo fecha y hora
 			// como cadenas de texto ('2024-02-10 15:30:00) en lugar de objetos Date
