@@ -2,7 +2,9 @@ const express = require("express");
 const dontenv = require("dotenv");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
+
 const userRouter = require("./routes/userRouter");
+const productRouter = require("./routes/productRouter");
 
 dontenv.config();
 
@@ -17,6 +19,7 @@ app.use(cookieParser());
 
 // PETICIONES A NUESTRA API
 app.use("/users", userRouter);
+app.use("/products", productRouter);
 
 // Servidor
 app.listen(PORT, () => {
