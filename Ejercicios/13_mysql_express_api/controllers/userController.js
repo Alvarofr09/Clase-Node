@@ -107,8 +107,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
 	const { authorization } = req.headers;
 
-	if (!authorization)
-		return res.status(401).send("No tienes permiso de administrador");
+	if (!authorization) return res.status(401);
 
 	try {
 		// Si no nos llega ningún campo por el body devolvemos un 400 (bad request)
