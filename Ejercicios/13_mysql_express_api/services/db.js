@@ -15,7 +15,7 @@ db.createConection = async () => {
 			// como cadenas de texto ('2024-02-10 15:30:00) en lugar de objetos Date
 			dateStrings: true,
 		});
-		console.log("Database connected, TRUE", mysqlConecction);
+		console.log("Database connected, TRUE");
 		return mysqlConecction;
 	} catch (error) {
 		throw new Error(error.message);
