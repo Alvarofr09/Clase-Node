@@ -22,6 +22,23 @@ userDao.getUserByEmail = async (email) => {
 	}
 };
 
+userDao.getUserById = async (id) => {
+	let conn = null;
+	try {
+		conn = await db.createConection();
+		return await db.query(
+			"SELECT * FROM users WHERE id = ?",
+			id,
+			"select",
+			conn
+		);
+	} catch (e) {
+		throw new Error(e);
+	} finally {
+		conn && (await conn.end());
+	}
+};
+
 userDao.addUser = async (userData) => {
 	// Conectamos con la base de datos y añadimos el usuario
 	let conn = null;
@@ -38,6 +55,19 @@ userDao.addUser = async (userData) => {
 		};
 		return await db.query("INSERT INTO users SET ?", userObj, "insert", conn);
 	} catch (error) {
+		throw new Error(error);
+	} finally {
+		conn && (await conn.end());
+	}
+};
+
+userDao.deleteUser = async (id) => {
+	let conn = null;
+	try {
+		conn = await db.createConection();
+		return await db.query("DELETE FROM users WHERE id = ?", id, "delete", conn);
+	} catch (error) {
+		console.log(error.message);
 		throw new Error(error);
 	} finally {
 		conn && (await conn.end());
