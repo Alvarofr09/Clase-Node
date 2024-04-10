@@ -105,7 +105,33 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-	return res.send("updateUser");
+	const { authorization } = req.headers;
+
+	if (!authorization)
+		return res.status(401).send("No tienes permiso de administrador");
+
+	try {
+		// Si no nos llega ningún campo por el body devolvemos un 400 (bad request)
+		if (Object.entries(req.body).length === 0)
+			return res.status(400).send("Error al recibir el body");
+
+		const userId = req.params.id;
+
+		// Buscamos si el id del usuario existe en la base de datos
+		const user = await dao.getUserById(userId);
+
+		if (user.length === 0) return res.status(404).send("el usuario no existe");
+
+		const isUserUpdate = await dao.updateUser(userId, req.body);
+
+		if (!isUserUpdate)
+			return res.status(500).send("No se ha podido actualizar el usuario");
+
+		return res.send(`Usuario con id ${userId} actualizado`);
+	} catch (error) {
+		console.log(error.message);
+		throw new Error(error.message);
+	}
 };
 
 module.exports = {
