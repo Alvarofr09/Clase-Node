@@ -24,7 +24,6 @@ const getProductById = async (req, res) => {
 		console.log(error);
 		throw new Error(error);
 	}
-	res.send("Aqui mostraria el producto solicitado");
 };
 
 const addProduct = async (req, res) => {
