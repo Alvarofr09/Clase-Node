@@ -43,7 +43,6 @@ const loginUser = async (req, res) => {
 		// Construimos el JWT con el id, email y rol del usuario
 		const jwtConstructor = new SignJWT({
 			id: user.id,
-			email,
 			role: user.userRole,
 		});
 
