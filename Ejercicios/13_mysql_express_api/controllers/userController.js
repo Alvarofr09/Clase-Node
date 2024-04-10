@@ -66,7 +66,51 @@ const loginUser = async (req, res) => {
 	}
 };
 
+const deleteUser = async (req, res) => {
+	const { authorization } = req.headers;
+
+	if (!authorization) return res.status(401);
+
+	const token = authorization.split(" ")[1];
+	try {
+		// Codificamos la clave secreta
+		const encoder = new TextEncoder();
+
+		// Verficamos el token con la funcion jwtVerify. Le pasamos el token y la clave secreta
+		const { payload } = await jwtVerify(
+			token,
+			encoder.encode(process.env.JWT_SECRET)
+		);
+
+		if (!payload.role) {
+			return res.status(401).send("No tienes permiso de administrador");
+		}
+
+		const { userId } = req.params;
+
+		const user = await dao.getUserById(userId);
+		if (user.length === 0)
+			return res.status(404).send("No se encontro el usuario");
+
+		const isUserDelete = await dao.deleteUser(userId);
+
+		if (!isUserDelete)
+			return res.status(500).send("No se ha podido borrar el usuario");
+
+		return res.status(200).send(`Usuario con id: ${userId} borrado`);
+	} catch (error) {
+		console.log(error.message);
+		throw new Error(error);
+	}
+};
+
+const updateUser = async (req, res) => {
+	return res.send("updateUser");
+};
+
 module.exports = {
 	addUser,
 	loginUser,
+	deleteUser,
+	updateUser,
 };
