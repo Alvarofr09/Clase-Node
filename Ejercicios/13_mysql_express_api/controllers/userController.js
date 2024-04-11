@@ -1,6 +1,27 @@
 const dao = require("../services/dao/userDao");
 const { SignJWT, jwtVerify } = require("jose");
 const md5 = require("md5");
+const { verifyToken } = require("../utils/verifyToken");
+
+const getProfileUser = async (req, res) => {
+	try {
+		const payload = await verifyToken(req);
+
+		const userId = req.params.id;
+
+		let user = await dao.getUserById(userId);
+		if (payload.id.toString() != userId) return res.sendStatus(401);
+
+		[user] = user;
+		delete user.password;
+		if (user.length === 0) return res.status(404).send("Usuario no encontrado");
+
+		return res.send(user);
+	} catch (error) {
+		console.log(error.mesagge);
+		throw new Error(error.mesagge);
+	}
+};
 
 const addUser = async (req, res) => {
 	const { name, email, password } = req.body;
@@ -67,24 +88,10 @@ const loginUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-	const { authorization } = req.headers;
-
-	if (!authorization) return res.status(401);
-
-	const token = authorization.split(" ")[1];
 	try {
-		// Codificamos la clave secreta
-		const encoder = new TextEncoder();
+		const payload = await verifyToken(req);
 
-		// Verficamos el token con la funcion jwtVerify. Le pasamos el token y la clave secreta
-		const { payload } = await jwtVerify(
-			token,
-			encoder.encode(process.env.JWT_SECRET)
-		);
-
-		if (!payload.role) {
-			return res.status(401).send("No tienes permiso de administrador");
-		}
+		if (!payload) return res.sendStatus(401);
 
 		const { userId } = req.params;
 
@@ -105,11 +112,10 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-	const { authorization } = req.headers;
-
-	if (!authorization) return res.status(401);
-
 	try {
+		const payload = verifyToken(req);
+
+		if (!payload) return res.sendStatus(401);
 		// Si no nos llega ningún campo por el body devolvemos un 400 (bad request)
 		if (Object.entries(req.body).length === 0)
 			return res.status(400).send("Error al recibir el body");
@@ -134,6 +140,7 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
+	getProfileUser,
 	addUser,
 	loginUser,
 	deleteUser,
