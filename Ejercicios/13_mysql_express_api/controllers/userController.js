@@ -9,8 +9,8 @@ const getProfileUser = async (req, res) => {
 
 		const userId = req.params.id;
 
-		let user = await dao.getUserById(userId);
 		if (payload.id.toString() != userId) return res.sendStatus(401);
+		let user = await dao.getUserById(userId);
 
 		[user] = user;
 		delete user.password;
