@@ -2,7 +2,7 @@ const moment = require("moment");
 const md5 = require("md5");
 
 const db = require("../db");
-const removeUndefinedKeys = require("../../utils/removeUndefinedKeys");
+const { removeUndefinedKeys } = require("../../utils/removeUndefinedKeys");
 
 const userDao = {};
 
