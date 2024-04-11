@@ -14,4 +14,4 @@ const removeUndefinedKeys = async (obj) => {
 	}
 };
 
-module.exports = removeUndefinedKeys;
+module.exports = { removeUndefinedKeys };
