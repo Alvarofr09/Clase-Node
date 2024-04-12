@@ -8,7 +8,6 @@ const {
 const productRouter = express.Router();
 
 productRouter.get("/", getAllProducts);
-
 productRouter.get("/:id", getProductById);
 
 productRouter.post("/", addProduct);
