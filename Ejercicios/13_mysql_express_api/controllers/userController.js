@@ -9,7 +9,7 @@ const getProfileUser = async (req, res) => {
 
 		const userId = req.params.id;
 
-		if (payload.id.toString() != userId) return res.sendStatus(401);
+		if (payload.id.toString() !== userId) return res.sendStatus(401);
 		let user = await dao.getUserById(userId);
 
 		[user] = user;
