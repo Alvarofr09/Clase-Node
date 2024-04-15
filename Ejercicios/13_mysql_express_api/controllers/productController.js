@@ -1,32 +1,6 @@
 const dao = require("../services/dao/productDao");
 const path = require("path");
 
-// const getAllProducts = async (req, res) => {
-// 	try {
-// 		const products = await dao.getAllProducts();
-// 		res.send(products);
-// 	} catch (error) {
-// 		console.log(error);
-// 		throw new Error(error);
-// 	}
-// };
-
-// const getProductById = async (req, res) => {
-// 	const { id } = req.params;
-
-// 	if (!id) return res.status(400).send("Error en la url");
-// 	try {
-// 		const product = await dao.getProductById(id);
-
-// 		if (product.length <= 0)
-// 			return res.status(404).send("No se encontro el producto solicitado");
-// 		res.send(product);
-// 	} catch (error) {
-// 		console.log(error);
-// 		throw new Error(error);
-// 	}
-// };
-
 const addProduct = async (req, res) => {
 	// Verificamos que el body no este vacío
 	if (Object.keys(req.body).length === 0)
@@ -79,7 +53,5 @@ const addProduct = async (req, res) => {
 };
 
 module.exports = {
-	// getAllProducts,
-	// getProductById,
 	addProduct,
 };
