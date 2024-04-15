@@ -54,7 +54,7 @@ productDao.addProduct = async (productData) => {
 		};
 
 		// Eliminamos los campos que no se van a registrar
-		productObj = removeUndefinedKeys(productObj);
+		productObj = await removeUndefinedKeys(productObj);
 
 		// Insertamos el nuevo producto
 		return await db.query(
