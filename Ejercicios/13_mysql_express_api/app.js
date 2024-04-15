@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
+const orderRouter = require("./routes/orderRouter");
 
 dontenv.config();
 
@@ -33,6 +34,7 @@ app.use(cookieParser());
 // PETICIONES A NUESTRA API
 app.use("/users", userRouter);
 app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 // Servidor
 app.listen(PORT, () => {
