@@ -1,4 +1,5 @@
 const dao = require("../services/dao/productDao");
+const path = require("path");
 
 // const getAllProducts = async (req, res) => {
 // 	try {
@@ -55,9 +56,21 @@ const addProduct = async (req, res) => {
 			for (const image of images) {
 				// Ya podemos acceder a las propiedades del objeto image
 				// Obtenemos el path de la imagen
-				let uploadPath = path.join(__dirname, "..public/product/" + image.name);
-				// Usamos
+				let uploadPath = path.join(
+					__dirname,
+					"../public/product/" + image.name
+				);
+				// Usamos el metodo mv para ubicar el archivo en nuestro servidor
+				image.mv(uploadPath, (err) => {
+					if (err) return res.status(500).send(err.mesagge);
+				});
+				await dao.addProductFile({
+					name: image.name,
+					path: uploadPath,
+					productId: productId,
+				});
 			}
+			return res.send(`Producto ${req.body.name} con id ${productId} añadido`);
 		}
 	} catch (error) {
 		console.log(error.mesagge);
