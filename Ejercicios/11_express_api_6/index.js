@@ -13,8 +13,10 @@ const authTokenRouter = require("./routes/authTokenRouter");
 // Cargamos variables de entorno
 dotenv.config();
 
+// Cosas nuevas
+
 // Definimos el puerto
-const port = process.env.PORT;
+const port = 3000;
 const app = express();
 
 // middlewares para interpretar el formato JSON y text desde el cliente por http
